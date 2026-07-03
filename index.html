@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bento Japanese Street Food & Izakaya | Leeds</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #c9a96e;
+            --accent: #8b0000;
+            --text-light: #f5f0e8;
+            --text-dark: #2c2c2c;
+            --bg-cream: #faf8f5;
+            --bg-dark: #0d0d0d;
+            --border: rgba(201, 169, 110, 0.3);
+            --gold-gradient: linear-gradient(135deg, #c9a96e 0%, #e8d5a3 50%, #c9a96e 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 0 4%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        nav.scrolled {
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(20px);
+            height: 65px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .nav-logo span {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--secondary);
+            letter-spacing: 4px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--secondary);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover { color: var(--secondary); }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1553621042-f6e147245754?w=1920&q=80') center/cover no-repeat;
+            opacity: 0.4;
+            transform: scale(1.1);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+        @keyframes heroZoom {
+            0% { transform: scale(1.1); }
+            100% { transform: scale(1.2); }
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.7) 50%, rgba(13,13,13,0.95) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+        .hero-subtitle {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--secondary);
+            letter-spacing: 8px;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 300;
+            color: var(--text-light);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s 0.6s forwards;
+        }
+        .hero-title .accent {
+            color: var(--secondary);
+            font-style: italic;
+            font-weight: 400;
+        }
+        .hero-desc {
+            font-size: 1.05rem;
+            color: rgba(245, 240, 232, 0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeInUp 1s 0.9s forwards;
+        }
+        .hero-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s 1.2s forwards;
+        }
+        .hero-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(245, 240, 232, 0.6);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .hero-info-item i { color: var(--secondary); font-size: 1rem; }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeInUp 1s 1.5s forwards;
+        }
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(245, 240, 232, 0.4);
+        }
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--secondary), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; height: 40px; }
+            50% { opacity: 1; height: 60px; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        section { padding: 100px 4%; position: relative; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-label {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: var(--secondary);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        .section-title.light { color: var(--text-light); }
+        .section-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--secondary);
+            margin: 20px auto 0;
+        }
+        .about { background: var(--bg-cream); }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-text { padding-right: 20px; }
+        .about-text p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.9;
+        }
+        .about-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+        }
+        .stat { text-align: center; }
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+        .about-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            position: relative;
+        }
+        .about-img {
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .about-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .about-img:hover img { transform: scale(1.05); }
+        .about-img:nth-child(1) { grid-row: span 2; height: 400px; }
+        .about-img:nth-child(2), .about-img:nth-child(3) { height: 192px; }
+        .signature {
+            background: var(--bg-dark);
+            padding: 120px 4%;
+        }
+        .signature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .dish-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .dish-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(201, 169, 110, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .dish-image {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            position: relative;
+        }
+        .dish-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dish-card:hover .dish-image img { transform: scale(1.08); }
+        .dish-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 50%;
+            background: linear-gradient(to top, rgba(13,13,13,0.8), transparent);
+        }
+        .dish-badge {
+            position: absolute;
+            top: 16px; left: 16px;
+            background: var(--gold-gradient);
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 2px;
+            z-index: 2;
+        }
+        .dish-content { padding: 24px; }
+        .dish-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        .dish-desc {
+            font-size: 0.88rem;
+            color: rgba(245, 240, 232, 0.55);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .dish-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        .full-menu-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 60px;
+            padding: 16px 48px;
+            background: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .full-menu-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--secondary);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+        .full-menu-btn:hover::before { left: 0; }
+        .full-menu-btn:hover { color: var(--primary); }
+        .full-menu-btn i { transition: transform 0.3s; }
+        .full-menu-btn:hover i { transform: translateX(4px); }
+        .btn-center { text-align: center; }
+        .menu-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(13, 13, 13, 0.97);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .menu-modal.active { display: block; opacity: 1; }
+        .menu-modal-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 4% 60px;
+            min-height: 100vh;
+        }
+        .menu-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        .menu-modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--text-light);
+        }
+        .menu-close {
+            background: none;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            color: var(--secondary);
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-close:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+        .menu-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+        }
+        .menu-tab {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            color: rgba(245, 240, 232, 0.5);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .menu-tab:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+        .menu-tab.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: var(--primary);
+        }
+        .menu-section {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+        .menu-section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .menu-category-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--secondary);
+            margin-bottom: 30px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .menu-category-title .jp {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: rgba(201, 169, 110, 0.5);
+        }
+        .menu-items-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            margin-bottom: 50px;
+        }
+        .menu-item {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            transition: background 0.3s;
+        }
+        .menu-item:hover { background: rgba(201, 169, 110, 0.03); }
+        .menu-item-info { flex: 1; }
+        .menu-item-name {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-item-desc {
+            font-size: 0.82rem;
+            color: rgba(245, 240, 232, 0.4);
+            line-height: 1.5;
+        }
+        .menu-item-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--secondary);
+            white-space: nowrap;
+            padding-top: 2px;
+        }
+        .veg-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px; height: 18px;
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            font-size: 0.6rem;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        .menu-note {
+            text-align: center;
+            padding: 30px;
+            color: rgba(245, 240, 232, 0.3);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+        .experience {
+            background: var(--bg-cream);
+            padding: 120px 4%;
+        }
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+        .experience-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .exp-img {
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .exp-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+        .exp-img:hover img { transform: scale(1.05); }
+        .exp-img:nth-child(1) { grid-row: span 2; height: 420px; }
+        .exp-img:nth-child(2), .exp-img:nth-child(3) { height: 202px; }
+        .experience-text h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--primary);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+        .experience-text p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.9;
+        }
+        .experience-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .feature-icon {
+            width: 40px; height: 40px;
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .feature-text h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .feature-text p {
+            font-size: 0.82rem;
+            color: #888;
+            margin: 0;
+            line-height: 1.5;
+        }
+        .reviews {
+            background: var(--bg-dark);
+            padding: 120px 4%;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(201, 169, 110, 0.08);
+            border-radius: 8px;
+            padding: 35px 30px;
+            transition: all 0.4s;
+        }
+        .review-card:hover {
+            border-color: rgba(201, 169, 110, 0.2);
+            transform: translateY(-4px);
+        }
+        .review-stars {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+        .review-text {
+            font-size: 0.95rem;
+            color: rgba(245, 240, 232, 0.7);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .reviewer-avatar {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), #e8d5a3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        .reviewer-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        .reviewer-info span {
+            font-size: 0.78rem;
+            color: rgba(245, 240, 232, 0.4);
+        }
+        .rating-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            padding: 10px 24px;
+            border-radius: 4px;
+            margin-top: 50px;
+        }
+        .rating-badge .stars {
+            color: var(--secondary);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+        .rating-badge .score {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        .rating-badge .count {
+            font-size: 0.8rem;
+            color: rgba(245, 240, 232, 0.5);
+        }
+        .location { background: var(--bg-cream); padding: 0; }
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+        .location-info {
+            padding: 100px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 600px;
+            margin-left: auto;
+        }
+        .location-info .section-header {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        .location-info .section-divider { margin: 20px 0 0; }
+        .info-list { list-style: none; }
+        .info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .info-list li:last-child { border-bottom: none; }
+        .info-icon {
+            width: 44px; height: 44px;
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .info-text h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .info-text p, .info-text a {
+            font-size: 0.92rem;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+            line-height: 1.6;
+        }
+        .info-text a:hover { color: var(--secondary); }
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            background: #e8e4df;
+        }
+        .map-container iframe {
+            width: 100%; height: 100%;
+            min-height: 600px;
+            border: none;
+            filter: grayscale(0.3) contrast(1.1);
+        }
+        .map-overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary);
+            color: var(--text-light);
+            padding: 16px 32px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .map-overlay:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+        footer {
+            background: var(--bg-dark);
+            padding: 80px 4% 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+        }
+        .footer-brand h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        .footer-brand .jp {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            letter-spacing: 4px;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .footer-brand p {
+            font-size: 0.88rem;
+            color: rgba(245, 240, 232, 0.4);
+            line-height: 1.8;
+            max-width: 300px;
+        }
+        .footer-col h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a {
+            color: rgba(245, 240, 232, 0.4);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.3s;
+        }
+        .footer-col ul li a:hover { color: var(--secondary); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: rgba(245, 240, 232, 0.3);
+        }
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+        .social-links a {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(245, 240, 232, 0.5);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .social-links a:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (max-width: 1024px) {
+            .signature-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid, .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .about-images, .experience-images { order: -1; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .location-grid { grid-template-columns: 1fr; }
+            .location-info {
+                padding: 60px 4%;
+                max-width: 100%;
+            }
+            .map-container iframe { min-height: 400px; }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px; left: 0;
+                width: 100%;
+                background: rgba(13, 13, 13, 0.98);
+                flex-direction: column;
+                padding: 30px;
+                gap: 25px;
+            }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .signature-grid { grid-template-columns: 1fr; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .menu-items-grid { grid-template-columns: 1fr; }
+            .experience-features { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero-info { flex-direction: column; gap: 15px; }
+            .menu-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 10px;
+            }
+            .about-stats { gap: 20px; }
+        }
+        .menu-modal::-webkit-scrollbar { width: 6px; }
+        .menu-modal::-webkit-scrollbar-track { background: transparent; }
+        .menu-modal::-webkit-scrollbar-thumb {
+            background: rgba(201, 169, 110, 0.3);
+            border-radius: 3px;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+<nav id="navbar">
+    <a href="#" class="nav-logo">BENTO<span>本番</span></a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#signature">Menu</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#location">Location</a></li>
+    </ul>
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="hero-subtitle">日本のストリートフード</p>
+        <h1 class="hero-title">Authentic Japanese<br><span class="accent">Street Food</span> & Izakaya</h1>
+        <p class="hero-desc">Step into the heart of Japan right here in Leeds. We craft every dish with passion, bringing the vibrant flavours of Tokyo's street markets and the warm atmosphere of a traditional izakaya to your table.</p>
+        <div class="hero-info">
+            <div class="hero-info-item"><i class="fas fa-star"></i><span>4.6 / 5 Rating</span></div>
+            <div class="hero-info-item"><i class="fas fa-pound-sign"></i><span>£10 – £20 per person</span></div>
+            <div class="hero-info-item"><i class="fas fa-utensils"></i><span>Dine-in · Takeaway · Delivery</span></div>
+        </div>
+    </div>
+    <div class="scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<section class="about" id="about">
+    <div class="about-grid reveal">
+        <div class="about-text">
+            <span class="section-label">Our Story</span>
+            <h2 class="section-title">A Taste of Japan<br>in the Heart of Leeds</h2>
+            <div class="section-divider"></div>
+            <p>Bento Japanese Street Food & Izakaya is more than a restaurant — it is an experience. Inspired by the bustling street food stalls of Osaka and the intimate charm of Tokyo's neighbourhood izakayas, we bring authentic Japanese flavours to Leeds with every dish we serve.</p>
+            <p>Our menu celebrates the diversity of Japanese cuisine, from crispy tempura and hand-rolled sushi to soul-warming ramen and sizzling yakitori grilled over charcoal. Every ingredient is chosen with care, every recipe perfected with tradition.</p>
+            <p>Whether you are sharing small plates with friends over sake, enjoying a hearty bento box for lunch, or slurping a bowl of our signature miso ramen, we promise a dining experience that transports you straight to Japan.</p>
+            <div class="about-stats">
+                <div class="stat"><div class="stat-number">99+</div><div class="stat-label">Menu Items</div></div>
+                <div class="stat"><div class="stat-number">4.6</div><div class="stat-label">Google Rating</div></div>
+                <div class="stat"><div class="stat-number">3</div><div class="stat-label">Ways to Enjoy</div></div>
+            </div>
+        </div>
+        <div class="about-images">
+            <div class="about-img"><img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=600&q=80" alt="Japanese restaurant interior"></div>
+            <div class="about-img"><img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&q=80" alt="Japanese food preparation"></div>
+            <div class="about-img"><img src="https://images.unsplash.com/photo-1540648639573-8c848de23f0a?w=400&q=80" alt="Japanese dining experience"></div>
+        </div>
+    </div>
+</section>
+
+<section class="signature" id="signature">
+    <div class="section-header reveal">
+        <span class="section-label">Chef's Selection</span>
+        <h2 class="section-title light">Signature Dishes</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div class="signature-grid">
+        <div class="dish-card reveal">
+            <div class="dish-image">
+                <span class="dish-badge">Signature</span>
+                <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&q=80" alt="Bento Special Miso Ramen">
+            </div>
+            <div class="dish-content">
+                <h3 class="dish-name">Bento Special Miso Ramen</h3>
+                <p class="dish-desc">Our signature rich miso broth loaded with chicken, king prawn, and beef — a bowl of pure comfort.</p>
+                <div class="dish-price">£10.90</div>
+            </div>
+        </div>
+        <div class="dish-card reveal">
+            <div class="dish-image">
+                <span class="dish-badge">Popular</span>
+                <img src="https://images.unsplash.com/photo-1609183480237-ccf67e2eb78a?w=600&q=80" alt="Chicken Teriyaki Don">
+            </div>
+            <div class="dish-content">
+                <h3 class="dish-name">Chicken Teriyaki Don</h3>
+                <p class="dish-desc">Perfectly grilled chicken glazed with our house teriyaki sauce, served over fluffy steamed rice.</p>
+                <div class="dish-price">£10.90</div>
+            </div>
+        </div>
+        <div class="dish-card reveal">
+            <div class="dish-image">
+                <span class="dish-badge">Chef's Pick</span>
+                <img src="https://images.unsplash.com/photo-1615361200141-f45040f367be?w=600&q=80" alt="Special Mixed Tempura">
+            </div>
+            <div class="dish-content">
+                <h3 class="dish-name">Special Mixed Tempura</h3>
+                <p class="dish-desc">Crispy king prawn and seasonal vegetables in our signature light tempura batter.</p>
+                <div class="dish-price">£6.50</div>
+            </div>
+        </div>
+        <div class="dish-card reveal">
+            <div class="dish-image">
+                <span class="dish-badge">Must Try</span>
+                <img src="https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?w=600&q=80" alt="Seafood Okonomiyaki">
+            </div>
+            <div class="dish-content">
+                <h3 class="dish-name">Seafood Okonomiyaki</h3>
+                <p class="dish-desc">Japanese savoury pancake loaded with fresh seafood, bonito flakes, and our special okonomiyaki sauce.</p>
+                <div class="dish-price">£8.00</div>
+            </div>
+        </div>
+        <div class="dish-card reveal">
+            <div class="dish-image">
+                <span class="dish-badge">New</span>
+                <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&q=80" alt="Miso Duck Bao">
+            </div>
+            <div class="dish-content">
+                <h3 class="dish-name">Miso Duck Bao</h3>
+                <p class="dish-desc">Fluffy steamed bao filled with slow-braised duck in rich miso glaze.</p>
+                <div class="dish-price">£5.50</div>
+            </div>
+        </div>
+        <div class="dish-card reveal">
+            <div class="dish-image">
+                <span class="dish-badge">Classic</span>
+                <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80" alt="Sushi Selection">
+            </div>
+            <div class="dish-content">
+                <h3 class="dish-name">Sushi Selection</h3>
+                <p class="dish-desc">Hand-crafted sushi and onigiri made with the freshest ingredients, traditional techniques.</p>
+                <div class="dish-price">From £3.50</div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-center reveal">
+        <button class="full-menu-btn" id="openMenuBtn">
+            <span>View Full Menu</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+</section>
+
+<section class="experience" id="experience">
+    <div class="experience-grid reveal">
+        <div class="experience-images">
+            <div class="exp-img"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="Restaurant ambience"></div>
+            <div class="exp-img"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&q=80" alt="Japanese drinks"></div>
+            <div class="exp-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Food plating"></div>
+        </div>
+        <div class="experience-text">
+            <span class="section-label">The Experience</span>
+            <h3>An Izakaya Atmosphere,<br>Right Here in Leeds</h3>
+            <p>Step through our doors and leave the city behind. Our Japan-inspired interiors blend warm wood tones, soft lantern lighting, and traditional decor to create an atmosphere that feels like a hidden gem in the backstreets of Tokyo.</p>
+            <p>Whether you are here for a quick lunch, a leisurely dinner, or drinks with friends, our easygoing izakaya vibe makes every visit feel special. We also offer a great selection of traditional Japanese drinks to complement your meal.</p>
+            <div class="experience-features">
+                <div class="feature">
+                    <div class="feature-icon"><i class="fas fa-chair"></i></div>
+                    <div class="feature-text"><h4>Cosy Seating</h4><p>Intimate tables perfect for sharing</p></div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fas fa-wine-glass"></i></div>
+                    <div class="feature-text"><h4>Japanese Drinks</h4><p>Sake, shochu & great tea selection</p></div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fas fa-motorcycle"></i></div>
+                    <div class="feature-text"><h4>Delivery Available</h4><p>Enjoy at home with takeaway & delivery</p></div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fas fa-wheelchair"></i></div>
+                    <div class="feature-text"><h4>Accessible</h4><p>Wheelchair-accessible car park</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="reviews" id="reviews">
+    <div class="section-header reveal">
+        <span class="section-label">Testimonials</span>
+        <h2 class="section-title light">What Our Guests Say</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div class="reviews-grid">
+        <div class="review-card reveal">
+            <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"A friend and I had dinner here tonight. What a hidden gem in Leeds. I lived in Japan for several years so I know what a good izakaya should feel like — and this place did not disappoint. The atmosphere, the flavours, everything was spot on."</p>
+            <div class="reviewer">
+                <div class="reviewer-avatar">S</div>
+                <div class="reviewer-info"><h4>Sarah M.</h4><span>Verified Guest · 3 weeks ago</span></div>
+            </div>
+        </div>
+        <div class="review-card reveal">
+            <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"A lovely restaurant serving Japanese cuisine. My friend and I had the nori ramen and the donburi rice bowl. Both are tasty and the portion is good. The highlight was the mochi ice cream, especially the green tea flavour — absolutely superb!"</p>
+            <div class="reviewer">
+                <div class="reviewer-avatar">J</div>
+                <div class="reviewer-info"><h4>James R.</h4><span>Verified Guest · 2 months ago</span></div>
+            </div>
+        </div>
+        <div class="review-card reveal">
+            <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"Lovely little Japanese restaurant — food was glorious and came really quickly. Staff were very friendly. Offered some traditional Japanese drinks too. Nice chilled atmosphere. Would recommend the bento boxes, the tofu bao bun and the duck bao bun — they were glorious!"</p>
+            <div class="reviewer">
+                <div class="reviewer-avatar">L</div>
+                <div class="reviewer-info"><h4>Local Guide</h4><span>193 reviews · 984 photos · 5 months ago</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-center reveal">
+        <div class="rating-badge">
+            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+            <span class="score">4.6</span>
+            <span class="count">· 439 Google Reviews</span>
+        </div>
+    </div>
+</section>
+
+<section class="location" id="location">
+    <div class="location-grid">
+        <div class="location-info reveal">
+            <div class="section-header">
+                <span class="section-label">Find Us</span>
+                <h2 class="section-title">Visit Bento</h2>
+                <div class="section-divider"></div>
+            </div>
+            <ul class="info-list">
+                <li>
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text"><h4>Address</h4><p>RF26+52, Leeds, United Kingdom</p></div>
+                </li>
+                <li>
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <div class="info-text"><h4>Phone</h4><a href="tel:+441132441190">+44 113 244 1190</a></div>
+                </li>
+                <li>
+                    <div class="info-icon"><i class="fas fa-globe"></i></div>
+                    <div class="info-text"><h4>Social</h4><a href="https://facebook.com" target="_blank">facebook.com</a></div>
+                </li>
+                <li>
+                    <div class="info-icon"><i class="fas fa-pound-sign"></i></div>
+                    <div class="info-text"><h4>Price Range</h4><p>£10 – £20 per person</p></div>
+                </li>
+                <li>
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div class="info-text"><h4>Services</h4><p>Dine-in · Takeaway · Delivery</p></div>
+                </li>
+            </ul>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2359.0!2d-1.54!3d53.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795c1f1f1f1f1f%3A0x1f1f1f1f1f1f1f1f!2sBento%20Japanese%20Street%20Food%20%26%20Izakaya!5e0!3m2!1sen!2suk!4v1700000000000!5m2!1sen!2suk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <a href="https://maps.app.goo.gl/8FHdRVjNCiRZmh4B8" target="_blank" class="map-overlay"><i class="fas fa-external-link-alt"></i>Open in Google Maps</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>BENTO</h3>
+            <span class="jp">本番</span>
+            <p>Bento boxes & Japanese street food served in an easygoing izakaya with Japan-inspired interiors. Authentic flavours, warm hospitality.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#signature">Menu</a></li>
+                <li><a href="#experience">Experience</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="#">Dine-in</a></li>
+                <li><a href="#">Takeaway</a></li>
+                <li><a href="#">Delivery</a></li>
+                <li><a href="#">Private Events</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+                <li><a href="tel:+441132441190">+44 113 244 1190</a></li>
+                <li><a href="https://maps.app.goo.gl/8FHdRVjNCiRZmh4B8" target="_blank">Get Directions</a></li>
+                <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; Bento Japanese Street Food & Izakaya. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Full Menu Modal -->
+<div class="menu-modal" id="menuModal">
+    <div class="menu-modal-inner">
+        <div class="menu-modal-header">
+            <h2 class="menu-modal-title">Our Menu</h2>
+            <button class="menu-close" id="closeMenuBtn"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="menu-tabs">
+            <button class="menu-tab active" data-section="street">Street Food</button>
+            <button class="menu-tab" data-section="tamago">Tamagoyaki</button>
+            <button class="menu-tab" data-section="yakitori">Yakitori</button>
+            <button class="menu-tab" data-section="grilled">Grilled</button>
+            <button class="menu-tab" data-section="bao">Bao Buns</button>
+            <button class="menu-tab" data-section="chicken">Secret Fried Chicken</button>
+            <button class="menu-tab" data-section="okonomi">Okonomiyaki</button>
+            <button class="menu-tab" data-section="bento">Bento Box</button>
+            <button class="menu-tab" data-section="donburi">Donburi</button>
+            <button class="menu-tab" data-section="ramen">Ramen & Udon</button>
+            <button class="menu-tab" data-section="chef">Chef Noodles</button>
+            <button class="menu-tab" data-section="sushi">Sushi</button>
+            <button class="menu-tab" data-section="salad">Salad</button>
+            <button class="menu-tab" data-section="side">Side Dishes</button>
+        </div>
+
+        <div class="menu-section active" id="street">
+            <h3 class="menu-category-title">Street Food <span class="jp">街頭小食</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Miso Soup</div><div class="menu-item-desc">Traditional Japanese miso soup with tofu and wakame seaweed</div></div><div class="menu-item-price">£3.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Gyoza</div><div class="menu-item-desc">Pan-fried chicken dumplings with soy dipping sauce</div></div><div class="menu-item-price">£4.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Prawn & Chive Gyoza</div><div class="menu-item-desc">Pan-fried prawn and chive dumplings</div></div><div class="menu-item-price">£4.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Katsu</div><div class="menu-item-desc">Crispy breaded chicken cutlet</div></div><div class="menu-item-price">£4.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Miso Chicken Karaage</div><div class="menu-item-desc">Japanese-style fried chicken marinated in miso</div></div><div class="menu-item-price">£6.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Takoyaki</div><div class="menu-item-desc">Octopus balls topped with takoyaki sauce and bonito flakes</div></div><div class="menu-item-price">£4.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Japanese Fried Tofu</div><div class="menu-item-desc">Crispy fried tofu with tentsuyu dipping sauce</div></div><div class="menu-item-price">£4.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Special Mixed Tempura</div><div class="menu-item-desc">2-piece king prawn and 6-piece seasonal mixed vegetable tempura</div></div><div class="menu-item-price">£6.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">King Prawn Tempura</div><div class="menu-item-desc">Crispy battered king prawns</div></div><div class="menu-item-price">£6.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Spicy Pepper Squid</div><div class="menu-item-desc">Crispy squid with spicy pepper seasoning</div></div><div class="menu-item-price">£5.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">King Prawn in Sweet Chilli Mayo</div><div class="menu-item-desc">Crispy king prawns with sweet chilli mayonnaise</div></div><div class="menu-item-price">£8.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Mixed Vegetable Tempura <span class="veg-badge">V</span></div><div class="menu-item-desc">Assorted seasonal vegetables in crispy tempura batter</div></div><div class="menu-item-price">£6.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Edamame Bean <span class="veg-badge">V</span></div><div class="menu-item-desc">Steamed young soybeans with sea salt</div></div><div class="menu-item-price">£3.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Spicy Edamame Bean <span class="veg-badge">V</span></div><div class="menu-item-desc">Steamed edamame with spicy seasoning</div></div><div class="menu-item-price">£3.70</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Vegetable Gyoza <span class="veg-badge">V</span></div><div class="menu-item-desc">Pan-fried vegetable dumplings</div></div><div class="menu-item-price">£4.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Pumpkin Croquettes Katsu <span class="veg-badge">V</span></div><div class="menu-item-desc">Crispy pumpkin croquettes</div></div><div class="menu-item-price">£4.60</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Kimchi <span class="veg-badge">V</span></div><div class="menu-item-desc">Traditional Korean fermented cabbage</div></div><div class="menu-item-price">£3.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Japanese Cold Tofu</div><div class="menu-item-desc">Chilled silken tofu with ginger and scallions</div></div><div class="menu-item-price">£3.80</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="tamago">
+            <h3 class="menu-category-title">Tamagoyaki <span class="jp">玉子焼</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Classic</div><div class="menu-item-desc">Traditional Japanese rolled omelette</div></div><div class="menu-item-price">£5.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Unagi</div><div class="menu-item-desc">Tamagoyaki with grilled eel</div></div><div class="menu-item-price">£7.40</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken & Cheese</div><div class="menu-item-desc">Tamagoyaki with chicken and melted cheese</div></div><div class="menu-item-price">£7.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Kimchi & Cheese</div><div class="menu-item-desc">Tamagoyaki with kimchi and melted cheese</div></div><div class="menu-item-price">£7.50</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="yakitori">
+            <h3 class="menu-category-title">Yakitori <span class="jp">焼き鳥</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Original Yakitori</div><div class="menu-item-desc">Classic grilled chicken skewer with tare sauce</div></div><div class="menu-item-price">£2.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Black Pepper Sauce</div><div class="menu-item-desc">Grilled chicken with cracked black pepper</div></div><div class="menu-item-price">£2.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Miso Chim Yakitori</div><div class="menu-item-desc">Chicken skewer with miso glaze</div></div><div class="menu-item-price">£2.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Plum Yakitori</div><div class="menu-item-desc">Grilled chicken with tangy plum sauce</div></div><div class="menu-item-price">£2.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Cheese Yakitori</div><div class="menu-item-desc">Chicken skewer topped with melted cheese</div></div><div class="menu-item-price">£3.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken & Leek</div><div class="menu-item-desc">Classic negima-style chicken and leek skewer</div></div><div class="menu-item-price">£2.80</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="grilled">
+            <h3 class="menu-category-title">Grilled <span class="jp">焼物</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Black Pepper Sirloin Skewers</div><div class="menu-item-desc">Grilled sirloin beef with black pepper</div></div><div class="menu-item-price">£4.90</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Capelin</div><div class="menu-item-desc">Grilled capelin fish</div></div><div class="menu-item-price">£5.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Prawn</div><div class="menu-item-desc">Grilled prawn skewer</div></div><div class="menu-item-price">£2.60</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Meatballs</div><div class="menu-item-desc">Japanese tsukune chicken meatballs</div></div><div class="menu-item-price">£3.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Cheese Tofu</div><div class="menu-item-desc">Grilled tofu with melted cheese</div></div><div class="menu-item-price">£2.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Japanese Cheesy Sausage</div><div class="menu-item-desc">Grilled sausage with cheese</div></div><div class="menu-item-price">£2.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Eel</div><div class="menu-item-desc">Grilled unagi eel with kabayaki sauce</div></div><div class="menu-item-price">£8.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Saba Fillet</div><div class="menu-item-desc">Grilled mackerel fillet</div></div><div class="menu-item-price">£6.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Charcoal Tako Tentacles</div><div class="menu-item-desc">Grilled octopus tentacles over charcoal</div></div><div class="menu-item-price">£9.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Wings Shichimi</div><div class="menu-item-desc">Spicy seven-flavour chicken wings</div></div><div class="menu-item-price">£3.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Wings Teriyaki</div><div class="menu-item-desc">Glazed teriyaki chicken wings</div></div><div class="menu-item-price">£2.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Grilled Cheesy Mussel</div><div class="menu-item-desc">Baked mussels with cheese topping</div></div><div class="menu-item-price">£6.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Vegetable Skewers</div><div class="menu-item-desc">Assorted grilled seasonal vegetables</div></div><div class="menu-item-price">£2.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Okra</div><div class="menu-item-desc">Grilled okra</div></div><div class="menu-item-price">£2.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Courgette</div><div class="menu-item-desc">Grilled courgette</div></div><div class="menu-item-price">£2.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Cherry Tomato</div><div class="menu-item-desc">Grilled cherry tomatoes</div></div><div class="menu-item-price">£2.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Asparagus</div><div class="menu-item-desc">Grilled asparagus spears</div></div><div class="menu-item-price">£2.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Eggplant</div><div class="menu-item-desc">Grilled aubergine with miso glaze</div></div><div class="menu-item-price">£2.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Onion Lollipop</div><div class="menu-item-desc">Grilled onion skewers</div></div><div class="menu-item-price">£2.00</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="bao">
+            <h3 class="menu-category-title">Bao Buns <span class="jp">包</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Steamed Bao Buns (2 pcs)</div><div class="menu-item-desc">Fluffy steamed bao buns</div></div><div class="menu-item-price">£5.30</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Miso Duck Bao</div><div class="menu-item-desc">Braised duck with miso in bao bun</div></div><div class="menu-item-price">£5.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Spicy Chilli Bao</div><div class="menu-item-desc">Spicy chicken bao with chilli sauce</div></div><div class="menu-item-price">£5.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Sweet Chilli Prawn Katsu Bao</div><div class="menu-item-desc">Crispy prawn katsu with sweet chilli in bao</div></div><div class="menu-item-price">£5.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Tofu Katsu Curry Bao <span class="veg-badge">V</span></div><div class="menu-item-desc">Crispy tofu with curry sauce in bao bun</div></div><div class="menu-item-price">£5.50</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="chicken">
+            <h3 class="menu-category-title">Secret Fried Chicken Thigh <span class="jp">秘伝唐揚げ</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Original Salt & Pepper</div><div class="menu-item-desc">Classic Taiwanese-style fried chicken thigh</div></div><div class="menu-item-price">£6.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Spicy Shichimi</div><div class="menu-item-desc">Fried chicken with seven-spice seasoning</div></div><div class="menu-item-price">£6.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Teriyaki</div><div class="menu-item-desc">Fried chicken thigh with teriyaki glaze</div></div><div class="menu-item-price">£6.80</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="okonomi">
+            <h3 class="menu-category-title">Okonomiyaki <span class="jp">お好み焼き</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Classic</div><div class="menu-item-desc">Traditional Japanese savoury pancake with cabbage and pork</div></div><div class="menu-item-price">£7.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Seafood</div><div class="menu-item-desc">Okonomiyaki loaded with mixed seafood</div></div><div class="menu-item-price">£8.00</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="bento">
+            <h3 class="menu-category-title">Bento Box <span class="jp">弁当</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Mixed Katsu Bento</div><div class="menu-item-desc">Chicken katsu, prawn katsu, gyoza, rice, salad, miso soup</div></div><div class="menu-item-price">£12.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Teriyaki Bento</div><div class="menu-item-desc">Grilled chicken teriyaki with rice and sides</div></div><div class="menu-item-price">£11.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Salmon Teriyaki Bento</div><div class="menu-item-desc">Grilled salmon with teriyaki glaze, rice and sides</div></div><div class="menu-item-price">£13.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Beef Teriyaki Bento</div><div class="menu-item-desc">Grilled beef with teriyaki sauce, rice and sides</div></div><div class="menu-item-price">£12.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Karaage Bento</div><div class="menu-item-desc">Japanese fried chicken with rice and sides</div></div><div class="menu-item-price">£11.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Deep Fried Tofu Teriyaki Bento <span class="veg-badge">V</span></div><div class="menu-item-desc">Crispy tofu with teriyaki, rice and sides</div></div><div class="menu-item-price">£11.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Unagi Don Bento</div><div class="menu-item-desc">Grilled eel over rice with bento sides</div></div><div class="menu-item-price">£15.50</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="donburi">
+            <h3 class="menu-category-title">Donburi Rice Bowl <span class="jp">丼</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Teriyaki Chicken Don</div><div class="menu-item-desc">Grilled chicken teriyaki over steamed rice</div></div><div class="menu-item-price">£10.90</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Katsu Curry Don</div><div class="menu-item-desc">Crispy chicken cutlet with Japanese curry over rice</div></div><div class="menu-item-price">£10.90</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Oyakodon</div><div class="menu-item-desc">Chicken and egg simmered in dashi over rice</div></div><div class="menu-item-price">£10.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Tempura Don <span class="veg-badge">V</span></div><div class="menu-item-desc">Assorted vegetable tempura over rice with tentsuyu</div></div><div class="menu-item-price">£11.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Spicy Kimchi Tofu Soup Don <span class="veg-badge">V</span></div><div class="menu-item-desc">Spicy kimchi tofu soup with rice</div></div><div class="menu-item-price">£11.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Grilled Chicken Fried Rice</div><div class="menu-item-desc">Wok-fried rice with grilled chicken</div></div><div class="menu-item-price">£10.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Extra Curry on Rice</div><div class="menu-item-desc">Additional curry sauce over rice</div></div><div class="menu-item-price">£2.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Extra Kimchi on Rice</div><div class="menu-item-desc">Additional kimchi over rice</div></div><div class="menu-item-price">£2.50</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="ramen">
+            <h3 class="menu-category-title">Japanese Soup Noodle <span class="jp">日式湯麵</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Bento Special Miso Ramen</div><div class="menu-item-desc">Rich miso broth with chicken, king prawn, and beef toppings</div></div><div class="menu-item-price">£10.90</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Teriyaki Chicken Miso Ramen</div><div class="menu-item-desc">Miso ramen topped with grilled teriyaki chicken</div></div><div class="menu-item-price">£9.90</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Grilled Sirloin Shoyu Ramen</div><div class="menu-item-desc">Soy-based broth with grilled sirloin beef</div></div><div class="menu-item-price">£11.20</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Spicy Miso Seafood Udon</div><div class="menu-item-desc">Spicy miso broth with mixed seafood and udon noodles</div></div><div class="menu-item-price">£10.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Eggplant Tempura Shoyu Ramen <span class="veg-badge">V</span></div><div class="menu-item-desc">Soy broth ramen with crispy eggplant tempura</div></div><div class="menu-item-price">£10.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Mixed Mushroom Miso Udon <span class="veg-badge">V</span></div><div class="menu-item-desc">Miso broth udon with assorted mushrooms</div></div><div class="menu-item-price">£10.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Extra Toppings</div><div class="menu-item-desc">Marinated Egg / Kimchi / Spring Onion / Butter</div></div><div class="menu-item-price">£1.00</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="chef">
+            <h3 class="menu-category-title">Chef Created Noodle <span class="jp">麵類</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Yakisoba</div><div class="menu-item-desc">Stir-fried noodles with chicken and vegetables</div></div><div class="menu-item-price">£10.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Black Pepper Sirloin Yakisoba</div><div class="menu-item-desc">Wok-fried noodles with sirloin beef and black pepper</div></div><div class="menu-item-price">£11.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Baked Seafood in Cheesy Sauce Udon</div><div class="menu-item-desc">Udon noodles baked with seafood and cheese sauce</div></div><div class="menu-item-price">£13.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Baked Tofu Kimchi Curry Udon <span class="veg-badge">V</span></div><div class="menu-item-desc">Udon baked with tofu, kimchi and curry</div></div><div class="menu-item-price">£13.50</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="sushi">
+            <h3 class="menu-category-title">Sushi <span class="jp">寿司</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Crunch Prawn Roll</div><div class="menu-item-desc">Prawn tempura roll with crunchy topping</div></div><div class="menu-item-price">£10.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Teriyaki Roll</div><div class="menu-item-desc">Grilled chicken teriyaki inside-out roll</div></div><div class="menu-item-price">£9.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Kaiso Seaweed Roll <span class="veg-badge">V</span></div><div class="menu-item-desc">Vegetarian roll with assorted seaweed</div></div><div class="menu-item-price">£9.80</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Yuzu King Prawn Onigiri</div><div class="menu-item-desc">Yuzu-seasoned king prawn rice ball</div></div><div class="menu-item-price">£4.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Kimchi Chicken Onigiri</div><div class="menu-item-desc">Rice ball with kimchi chicken filling</div></div><div class="menu-item-price">£4.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Iran Tofu Onigiri <span class="veg-badge">V</span></div><div class="menu-item-desc">Vegetarian rice ball with tofu</div></div><div class="menu-item-price">£4.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Grilled Yaki Onigiri <span class="veg-badge">V</span></div><div class="menu-item-desc">Grilled crispy rice ball with soy glaze</div></div><div class="menu-item-price">£3.50</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="salad">
+            <h3 class="menu-category-title">Salad <span class="jp">沙律</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Chicken Seaweed Salad</div><div class="menu-item-desc">Mixed seaweed salad with shredded chicken</div></div><div class="menu-item-price">£6.90</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Mango Salad</div><div class="menu-item-desc">Fresh mango salad with sesame dressing</div></div><div class="menu-item-price">£6.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Kaiso Seaweed Salad <span class="veg-badge">V</span></div><div class="menu-item-desc">Traditional Japanese seaweed salad</div></div><div class="menu-item-price">£5.50</div></div>
+            </div>
+        </div>
+
+        <div class="menu-section" id="side">
+            <h3 class="menu-category-title">Side Dish <span class="jp">主食</span></h3>
+            <div class="menu-items-grid">
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Potato Chips</div><div class="menu-item-desc">Crispy seasoned potato chips</div></div><div class="menu-item-price">£4.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Steamed Rice</div><div class="menu-item-desc">Japanese short-grain steamed rice</div></div><div class="menu-item-price">£3.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Fried Rice</div><div class="menu-item-desc">Wok-fried rice with egg and vegetables</div></div><div class="menu-item-price">£4.00</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Yaki Udon</div><div class="menu-item-desc">Stir-fried udon noodles</div></div><div class="menu-item-price">£4.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Yaki Soba</div><div class="menu-item-desc">Stir-fried soba noodles</div></div><div class="menu-item-price">£4.50</div></div>
+                <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Curry Sauce</div><div class="menu-item-desc">Japanese curry sauce</div></div><div class="menu-item-price">£4.00</div></div>
+            </div>
+        </div>
+
+        <div class="menu-note">(V) denotes vegetarian options. All prices are subject to change. Please inform staff of any allergies.</div>
+    </div>
+</div>
+
+<script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinksItems.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Scroll reveal animation
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Menu Modal
+    const menuModal = document.getElementById('menuModal');
+    const openMenuBtn = document.getElementById('openMenuBtn');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    openMenuBtn.addEventListener('click', () => {
+        menuModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+        menuModal.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    menuModal.addEventListener('click', (e) => {
+        if (e.target === menuModal) {
+            menuModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Menu tabs
+    const menuTabs = document.querySelectorAll('.menu-tab');
+    const menuSections = document.querySelectorAll('.menu-section');
+
+    menuTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const sectionId = tab.getAttribute('data-section');
+            menuTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            menuSections.forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Parallax effect for hero
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg && scrolled < window.innerHeight) {
+            heroBg.style.transform = `scale(1.1) translateY(${scrolled * 0.3}px)`;
+        }
+    });
+</script>
+
+</body>
+</html>
